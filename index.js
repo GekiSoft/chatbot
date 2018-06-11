@@ -83,7 +83,7 @@ function handleMessage(sender_psid, received_message) {
             let lstPrice;
             if (err === null) {
                 lstPrice = `${data.Data.LastPrice * 100000000} Satoshi`;
-                console.log(lstPrice);
+                return lstPrice;
             }
         })  
         response = {
