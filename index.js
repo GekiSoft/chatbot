@@ -64,6 +64,45 @@ function sendText(sender, text) {
     })
 }
 
+// Handles messages events
+function handleMessage(sender_psid, received_message) {
+    let response;
+
+    if(received_message.text === '/price') {
+        response = {
+            "text" : "Price : 200 satoshi Бе -10.00% Volume : 123456 TZC As of (date)."
+        }
+    }
+
+    callSendAPI(sender_psid, response);
+}
+
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, received_postback) {}
+
+// Sends response messages via the Send API
+function callSendAPI(sender_psid, response) {
+    let message = {
+        "recipient" : {
+            "id" : sender_psid
+        },
+        "message" : response
+    }
+
+    request({
+        "uri" : "https://graph.facebook.com/v2.6/me/messages",
+        "qs" : { "acces_token" : PAGE_ACCESS_TOKEN },
+        "method" : "POST",
+        "json" : request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
+
+}
 
 app.listen(app.get('port'), function() {
     console.log("running : port")
