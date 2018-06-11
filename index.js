@@ -77,14 +77,9 @@ function sendText(sender, text) {
 function handleMessage(sender_psid, received_message) {
     let response;
     if(received_message.text === '/price') {
-        let lstPrice;
-        superagent.get('https://www.cryptopia.co.nz/api/GetMarket/TZC_BTC', [], function(err, res) {
-            var data = JSON.parse(res.text)
-            lstPrice = `${data.Data.LastPrice * 100000000} Satoshi`;
-            response = {
-                "text": lstPrice
-                }
-        })  
+       response = {
+                "text": "200 satoshi"
+                } 
     }
     callSendAPI(sender_psid, response);
 }
