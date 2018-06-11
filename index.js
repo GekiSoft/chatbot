@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
+const superagent = require('superagent')
 
 const app = express()
 
@@ -69,25 +70,27 @@ function sendText(sender, text) {
     })
 }
 
+
+
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
-    let response;
-    
-    if(received_message.text === '/price') {
+    superagent.get('https://www.cryptopia.co.nz/api/GetMarket/TZC_BTC', [], function(err, res, body) {
+        var data = JSON.parse(body)
+        let lstPrice = data.Data.LastPrice * 100000000 + ' Satoshi' ;
+        console.log(lstPrice);
+
+
+
+        let response;    
+        if(received_message.text === '/price') {
         response = {
-            "text": "200 satoshi"
+            "text": lstPrice
         }
     }
-
-
-
-    // if(received_message.text) {
-    //     response = {
-    //         "text": `You sent the message: "${received_message.text}".`
-    //     }
-    // }
-
     callSendAPI(sender_psid, response);
+
+    })
 }
 
 // Handles messaging_postbacks events
