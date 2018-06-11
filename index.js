@@ -73,11 +73,19 @@ function sendText(sender, text) {
 function handleMessage(sender_psid, received_message) {
     let response;
     
-    if(received_message.text) {
+    if(received_message.text === '/price') {
         response = {
-            "text": `You sent the message: "${received_message.text}".`
+            "text": "200 satoshi"
         }
     }
+
+
+
+    // if(received_message.text) {
+    //     response = {
+    //         "text": `You sent the message: "${received_message.text}".`
+    //     }
+    // }
 
     callSendAPI(sender_psid, response);
 }
@@ -93,7 +101,7 @@ function callSendAPI(sender_psid, response) {
         },
         "message": response
       }
-    console.log(`\"${sender_psid}\"` + " " + response.text);
+    //console.log(`\"${sender_psid}\"` + " " + response.text);
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
         "qs": { "access_token":PAGE_ACCESS_TOKEN },
