@@ -35,9 +35,9 @@ app.post('/webhook/', (req, res) => {
     if (body.object === 'page') {
         body.entry.forEach(function (entry) {
             let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+            //console.log(webhook_event);
             let sender_psid = webhook_event.sender.id;
-            console.log('Sender PSID: ' + sender_psid);
+            //console.log('Sender PSID: ' + sender_psid);
             //console.log('test text' + webhook_event.message.text);
 
             if (webhook_event.message) {
@@ -74,7 +74,7 @@ function handleMessage(sender_psid, received_message) {
     let response;
     
     if(received_message.text) {
-        response = 'test reply'
+        response = received_message.text
     }
 
     callSendAPI(sender_psid, response);
@@ -86,14 +86,15 @@ function handlePostback(sender_psid, received_postback) {}
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
     let request_body = {
-        recipient : {
-            id : sender_psid
+        "recipient" : {
+            "id" : sender_psid
         },
-        message : {
-            text : response
+        "message" : {
+            "text" : `You said, "${response}".`
         }
     }
     console.log(sender_psid + " " + response);
+
 
     request({
         "uri" : "https://graph.facebook.com/v2.6/me/messages",
