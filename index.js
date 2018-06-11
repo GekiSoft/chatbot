@@ -29,9 +29,9 @@ app.get('/webhook/', function(req, res) {
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
 app.post('/webhook/', function(req, res) {
-    let messaging = req.body.entry[0].messaging
-    for (let i = 0; i< messaging.length; i++) {
-        let event = messaging[i]
+    let messaging_events = req.body.entry.messaging[0]
+    for (let i = 0; i< messaging_events.length; i++) {
+        let event = messaging_events[i]
         let sender = event.sender.id
         if(event.message && event.message.text) {
             let text = event.message.text
