@@ -38,10 +38,10 @@ app.post('/webhook/', (req, res) => {
             console.log(webhook_event);
             let sender_psid = webhook_event.sender.id;
             console.log('Sender PSID: ' + sender_psid);
-            console.log('test text' + webhook_event.message.text);
+            //console.log('test text' + webhook_event.message.text);
 
             if (webhook_event.message) {
-                sendText(sender_psid, webhook_event.message);
+                handleMessage(sender_psid, webhook_event.message);
             }
         })
         res.status(200).send('EVENT_RECEIVED');
@@ -72,7 +72,7 @@ function sendText(sender, text) {
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
     let response;
-
+    
     if(received_message.text) {
         response = {
             "text" : "test reply"
@@ -93,6 +93,7 @@ function callSendAPI(sender_psid, response) {
         },
         "message" : response
     }
+    console.log(sender_psid + " " + response);
 
     request({
         "uri" : "https://graph.facebook.com/v2.6/me/messages",
