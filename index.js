@@ -68,9 +68,9 @@ function sendText(sender, text) {
 function handleMessage(sender_psid, received_message) {
     let response;
 
-    if(received_message.text === '/price') {
+    if(received_message.text) {
         response = {
-            "text" : "Price : 200 satoshi Бе -10.00% Volume : 123456 TZC As of (date)."
+            "text" : "test reply"
         }
     }
 
