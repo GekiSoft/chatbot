@@ -87,13 +87,13 @@ function handleMessage(sender_psid, received_message) {
 
                 response = {
                     "text": lstPrice
-                }
+                    }
             }
-        }  
+        })  
+    
+    
     }
     callSendAPI(sender_psid, response);
-
-    })
 }
 
 // Handles messaging_postbacks events
