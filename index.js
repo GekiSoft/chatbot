@@ -74,7 +74,9 @@ function handleMessage(sender_psid, received_message) {
     let response;
     
     if(received_message.text) {
-        response = received_message.text
+        response = {
+            "text": `You sent the message: "${received_message.text}".`
+        }
     }
 
     callSendAPI(sender_psid, response);
@@ -86,21 +88,19 @@ function handlePostback(sender_psid, received_postback) {}
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
     let request_body = {
-        "recipient" : {
-            "id" : sender_psid
+        "recipient": {
+            "id": sender_psid
         },
-        "message" : {
-            "text" : `You said, "${response}".`
-        }
+        "message": response
     }
-    console.log(sender_psid + " " + response);
+    console.log(sender_psid + " " + response.text);
 
 
     request({
-        "url" : "https://graph.facebook.com/v2.6/me/messages",
-        "qs" : { "access_token" : PAGE_ACCESS_TOKEN },
-        "method" : "POST",
-        "json" : request_body
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs: { "access_token": PAGE_ACCESS_TOKEN },
+        method: "POST",
+        json: request_body
     }, (err, res, body) => {
         if (!err) {
             console.log('message sent!')
