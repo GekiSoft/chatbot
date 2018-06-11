@@ -41,7 +41,7 @@ app.post('/webhook/', (req, res) => {
             console.log('test text' + webhook_event.message.text);
 
             if (webhook_event.message) {
-                handleMessage(sender_psid, webhook_event.message);
+                sendText(sender_psid, webhook_event.message);
             }
         })
         res.status(200).send('EVENT_RECEIVED');
@@ -53,8 +53,8 @@ app.post('/webhook/', (req, res) => {
 function sendText(sender, text) {
     let messageData = {text : text}
     request({
-        url: "https://graph.facebook.com/v2.6/me/messages",
-        qs : {access_token : PAGE_ACCESS_TOKEN},
+        uri: "https://graph.facebook.com/v2.6/me/messages",
+        qs : { "access_token" : PAGE_ACCESS_TOKEN},
         method : "POST",
         json : {
             recipient : {id : sender},
