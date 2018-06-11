@@ -35,7 +35,7 @@ app.post('/webhook/', (req, res) => {
     if (body.object === 'page') {
         body.entry.forEach(function (entry) {
             let webhook_event = entry.messaging[0];
-            //console.log(webhook_event);
+            console.log(webhook_event);
             let sender_psid = webhook_event.sender.id;
             //console.log('Sender PSID: ' + sender_psid);
             //console.log('test text' + webhook_event.message.text);
@@ -86,28 +86,26 @@ function handleMessage(sender_psid, received_message) {
 function handlePostback(sender_psid, received_postback) {}
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, text) {
-    let messageData = {
-        "text": text
-    }
+function callSendAPI(sender_psid, response) {
+    let request_body = {
+        "recipient": {
+          "id": sender_psid
+        },
+        "message": response
+      }
     console.log(sender_psid + " " + text);
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
-        "json": {
-            "recipient": {
-                "id": sender_psid
-            },
-            "message": messageData
-        }
-    }, (err, res, body) => {
+        "json": request_body
+      }, (err, res, body) => {
         if (!err) {
-            console.log('message sent!')
+          console.log('message sent!')
         } else {
-            console.error("Unable to send message:" + err);
+          console.error("Unable to send message:" + err);
         }
-    });
+      }); 
 
 }
 
