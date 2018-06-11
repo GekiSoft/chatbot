@@ -84,13 +84,11 @@ function handleMessage(sender_psid, received_message) {
             if (err === null) {
                 lstPrice = `${data.Data.LastPrice * 100000000} Satoshi`;
                 console.log(lstPrice);
-
-                response = {
-                    "text": lstPrice
-                    }
             }
         })  
-    
+        response = {
+            "text": lstPrice
+            }
     
     }
     callSendAPI(sender_psid, response);
