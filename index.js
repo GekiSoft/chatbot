@@ -54,8 +54,8 @@ function sendText(sender, text) {
     let messageData = {text : text}
     request({
         uri: "https://graph.facebook.com/v2.6/me/messages",
-        qs : { "access_token" : PAGE_ACCESS_TOKEN},
-        method : "POST",
+        qs : { "access_token" : PAGE_ACCESS_TOKEN },
+        method: "POST",
         json : {
             recipient : {id : sender},
             message : messageData
@@ -86,21 +86,17 @@ function handleMessage(sender_psid, received_message) {
 function handlePostback(sender_psid, received_postback) {}
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-    let request_body = {
-        "recipient": {
-            "id": sender_psid
-        },
-        "message": response
-    }
-    console.log(sender_psid + " " + response.text);
-
-
+function callSendAPI(sender_psid, text) {
+    let messageData = {text : text}
+    console.log(sender_psid + " " + text);
     request({
         url: "https://graph.facebook.com/v2.6/me/messages",
         qs: { "access_token": PAGE_ACCESS_TOKEN },
         method: "POST",
-        json: request_body
+        json: {
+            recipient : {id : sender_psid},
+            message : messageData
+        }
     }, (err, res, body) => {
         if (!err) {
             console.log('message sent!')
