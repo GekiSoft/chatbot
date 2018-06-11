@@ -75,12 +75,13 @@ function sendText(sender, text) {
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
-    superagent.get('https://www.cryptopia.co.nz/api/GetMarket/TZC_BTC', [], function(err, res, body) {
-        var data = JSON.parse(body)
-        let lstPrice = data.Data.LastPrice * 100000000 + ' Satoshi' ;
+    superagent.get('https://www.cryptopia.co.nz/api/GetMarket/TZC_BTC', [], function(err, res) {
+        var data = JSON.parse(res.text)
+        let lstPrice;
+        if (err !== null) {
+            lstPrice = data.Data.LastPrice * 100000000 + ' Satoshi';
         console.log(lstPrice);
-
-
+        }
 
         let response;    
         if(received_message.text === '/price') {
