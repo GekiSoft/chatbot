@@ -89,11 +89,11 @@ function handlePostback(sender_psid, received_postback) {}
 function callSendAPI(sender_psid, response) {
     let request_body = {
         "recipient": {
-          "id": sender_psid
+          "id": `\'${sender_psid}\'`
         },
         "message": response
       }
-    console.log(sender_psid.toString() + " " + response.text);
+    console.log(`\'${sender_psid}\'` + " " + response.text);
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
