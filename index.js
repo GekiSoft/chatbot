@@ -74,7 +74,7 @@ function handleMessage(sender_psid, received_message) {
     let response;
     
     if(received_message.text) {
-        response = "test reply"
+        response = 'test reply'
     }
 
     callSendAPI(sender_psid, response);
@@ -86,11 +86,11 @@ function handlePostback(sender_psid, received_postback) {}
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
     let request_body = {
-        "recipient" : {
-            "id" : sender_psid
+        recipient : {
+            id : sender_psid
         },
-        "message" : {
-            "text" : response
+        message : {
+            text : response
         }
     }
     console.log(sender_psid + " " + response);
