@@ -74,9 +74,7 @@ function handleMessage(sender_psid, received_message) {
     let response;
     
     if(received_message.text) {
-        response = {
-            "text" : "test reply"
-        }
+        response = "test reply"
     }
 
     callSendAPI(sender_psid, response);
@@ -91,7 +89,9 @@ function callSendAPI(sender_psid, response) {
         "recipient" : {
             "id" : sender_psid
         },
-        "message" : response
+        "message" : {
+            "text" : response
+        }
     }
     console.log(sender_psid + " " + response);
 
